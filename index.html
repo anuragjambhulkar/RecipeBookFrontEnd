@@ -1,621 +1,837 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Recipe Book</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-      }
-      /* Styling for the navigation bar */
-      .navbar {
-        background-color: rgb(255, 74, 74);
-        color: #fff;
-        padding: 10px;
-        text-align: center;
-        margin-bottom: 10px;
-        justify-content: space-between;
-        align-items: center;
-        position: relative;
-        overflow: hidden;
-        height: 10vh;
-      }
 
-      .navbar h1 {
-        margin: 0;
-        font-size: 24px;
-        font-weight: bold;
-        font-family: Arial, sans-serif; /* Change the font */
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&display=swap">
+  <title>Login & Recipe Book</title>
+  <style>
 
-      .navbar ul {
-        list-style: none;
-        padding: 0;
-        display: flex;
-      }
+    /* Styles for login form */
+    body {
+    font-family: 'Roboto', sans-serif; /* Change to Roboto font */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  /* Random recipes image from Unsplash */
 
-      .navbar li {
-        margin: 0 10px;
-      }
-
-      .navbar li a {
-        text-decoration: none;
-        color: #fff;
-        font-weight: bold;
-        transition: color 0.3s ease;
-      }
-
-      .navbar li a:hover {
-        color: #212121;
-      }
-      .container {
-  max-width: 1200px; /* Increased max-width */
-  margin: 20px auto;
-  padding: 20px;
-  background-color: #f9f9f9;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
-.recipe-list {
-  list-style: none;
-  padding: 0;
-  display: flex;
-  flex-wrap: wrap; /* Enable wrapping */
-  /* justify-content: space-between; Add space between columns */
-}
+    #loginForm {
+      background-color: #ff2626b9;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      width: 700px;
+      /* Adjust the width as needed */
+      margin: 0 auto;
+      /* Center the form horizontally */
+    }
+    form {
+      background-color: #e3414130;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      width: 700px;
+      /* Adjust the width as needed */
+      margin: 0 auto;
+      /* Center the form horizontally */
+    }
 
-.recipe-container {
-  background-size: cover;
-  background-position: center;
-  border-radius: 5px;
-  padding: 20px;
-  margin-bottom: 20px;
-  color: #fff;
-  position: relative;
-  width: calc(33.33% - 20px); /* Three columns per row with margin */
-  margin-right: 20px; /* Add margin between columns */
-  box-sizing: border-box; /* Include padding and border in width calculation */
-}
+    input[type="text"],
+    input[type="password"] {
+      width: 90%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
 
-/* Adjust styles for larger screens */
-@media only screen and (max-width: 768px) {
-  .recipe-container {
-    width: calc(50% - 20px); /* Two columns per row on smaller screens */
-  }
-}
+    input[type="submit"] {
+      background-color: #007bff;
+      color: #241d1d;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 3px;
+      cursor: pointer;
+    }
 
-/* Adjust styles for smaller screens */
-@media only screen and (max-width: 480px) {
-  .recipe-container {
-    width: 100%; /* Full width on extra small screens */
-    margin-right: 0; /* No margin between columns */
-  }
-}
+    input[type="submit"]:hover {
+      background-color: #0056b3;
+    }
 
-      .recipe-container h2 {
-        margin-top: 0;
-        margin-bottom: 10px;
-        padding-bottom: 5px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.5);
-      }
-      .recipe-container .overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        border-radius: 5px;
-      }
-      .recipe-container .content {
-        position: relative;
-        z-index: 1;
-      }
-      .recipe-img {
-        max-width: 100%;
-        height: auto;
-        border-radius: 5px;
-        margin-bottom: 10px;
-        display: none; /* Hide the image element */
-      }
-      .btn {
-        display: inline-block;
-        background-color: #333;
-        color: #fff;
-        border: none;
-        padding: 8px 16px;
-        margin-left: 10px;
-        border-radius: 5px;
-        cursor: pointer;
-      }
-      .btn:hover {
-        background-color: #555;
-      }
-      .recipe-img {
-        max-width: 100%;
-        height: auto;
-        margin-bottom: 10px;
-        border-radius: 5px;
-      }
-      .editable-input {
-        display: block;
-        margin-bottom: 10px;
-        width: 100%;
-        padding: 8px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        box-sizing: border-box;
-      }
-      /* Styling for dynamic background images */
-      .recipe-container {
-        background-size: cover;
-        background-position: center;
-        border-radius: 5px;
-        padding: 20px;
-        margin-bottom: 20px;
-        color: #fff;
-        position: relative;
-      }
-      .recipe-container h2 {
-        margin-top: 0;
-        margin-bottom: 10px;
-        padding-bottom: 5px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.5);
-      }
-      .recipe-container .overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        border-radius: 5px;
-      }
-      .recipe-container .content {
-        position: relative;
-        z-index: 1;
-      }
-    </style>
-  </head>
-  <body>
-    <nav class="navbar">
-      <h1>Recipe Book</h1>
-      <ul>
-        <li><a href="#" onclick="filterRecipes('all')">All</a></li>
-        <li>
-          <a href="#" onclick="filterRecipes('south-indian')">South Indian</a>
-        </li>
-        <li>
-          <a href="#" onclick="filterRecipes('north-indian')">North Indian</a>
-        </li>
-        <li><a href="#" onclick="filterRecipes('chinese')">Chinese</a></li>
-        <li><a href="#" onclick="filterRecipes('fast-food')">Fast Food</a></li>
-        <!-- Add more category buttons as needed -->
-      </ul>
-    </nav>
+    .error {
+      color: rgb(0, 0, 0);
+    }
 
-    <div class="container" id="loginForm">
-      <div class="login-container">
-        <h2>Login</h2>
-        <input
-          type="text"
-          placeholder="Username"
-          id="username"
-          class="editable-input"
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          id="password"
-          class="editable-input"
-        />
-        <button class="btn" onclick="login()">Login</button>
+    /* Styles for recipe book */
+    .recipe-container {
+      display: none;
+      /* Hide recipe container by default */
+      background-size: cover;
+      background-position: center;
+      margin: 20px;
+      border-radius: 5px;
+    }
+
+    .recipe-container.show {
+      display: block;
+      /* Show recipe container when logged in */
+    }
+
+    .add-recipe-button {
+      background-color: #ff4a4a;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 3px;
+      cursor: pointer;
+      margin-top: 10px;
+      /* Added margin */
+    }
+
+    .add-recipe-button:hover {
+      background-color: #ff7575;
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .category-card {
+      position: relative;
+      width: calc(50% - 10px);
+      /* Adjusted width to fit 2 cards in a row with a gap */
+      height: 200px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      /* Add cursor pointer to indicate clickable */
+    }
+
+    .category-card:hover .category-card-name {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .category-card:hover .category-card-image {
+      filter: blur(3px);
+      transition: filter 0.3s ease-in-out;
+    }
+
+    .category-card-image {
+      flex: 1;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .category-card-name {
+      padding: 10px;
+      background-color: rgba(255, 255, 255, 0.7);
+      text-align: center;
+      font-weight: bold;
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    }
+
+    .recipe-list-container {
+      display: none;
+      width: 100%;
+      margin-top: 20px;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .recipe-list-container.show {
+      display: block;
+    }
+
+    .recipe-list-container h2 {
+      margin-top: 0;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .recipe-list {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .recipe-item {
+      background-color: #f9f9f9;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s;
+      position: relative;
+    }
+
+    .recipe-item:hover {
+      background-color: #ececec;
+    }
+
+    .recipe-item h3 {
+      margin-top: 0;
+    }
+
+    .recipe-controls {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+    }
+
+    .recipe-controls button {
+      background-color: #ff4a4a;
+      color: #fff;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    .add-recipe-form {
+      display: none;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      margin-top: 20px;
+    }
+
+    .add-recipe-form h3 {
+      margin-top: 0;
+    }
+
+    .add-recipe-form form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .add-recipe-form input[type="text"],
+    .add-recipe-form textarea {
+      margin-bottom: 10px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+
+    .add-recipe-form button[type="submit"],
+    .add-recipe-form button[type="button"] {
+      background-color: #ff4a4a;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 3px;
+      cursor: pointer;
+      margin-right: 10px;
+      width: 10vw;
+      margin-top: 2px;
+    }
+
+    .add-recipe-form button[type="submit"]:hover,
+    .add-recipe-form button[type="button"]:hover {
+      background-color: #ff7575;
+    }
+
+
+    .recipe-controls button:hover {
+      background-color: #ff7575;
+    }
+
+    .edit-form {
+      display: none;
+    }
+
+    .edit-form input[type="text"] {
+      width: calc(100% - 10px);
+    }
+
+    .edit-form button {
+      width: calc(50% - 5px);
+    }
+
+    .edit-delete-buttons {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      display: flex;
+      gap: 5px;
+    }
+
+    .edit-delete-buttons button {
+      background-color: #ff4a4a;
+      color: #fff;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    .edit-delete-buttons button:hover {
+      background-color: #ff7575;
+    }
+  </style>
+</head>
+
+<body id="body">
+  <!-- Login form -->
+  <form id="loginForm">
+    <h2>Login</h2>
+    <div id="error" class="error"></div>
+    <input type="text" id="username" placeholder="Username" />
+    <input type="password" id="password" placeholder="Password" />
+    <input type="submit" value="Login" />
+  </form>
+
+  <!-- Recipe book container -->
+  <div class="recipe-container" id="recipeContainer">
+    <header>
+      <h1>Welcome to Recipe Book</h1>
+    </header>
+
+    <div class="container">
+      <!-- South Indian category card -->
+      <div class="category-card" onclick="openCategory('SouthIndian')">
+        <div class="category-card-name">South Indian</div>
+        <div class="category-card-image" id="southIndianImage"></div>
+      </div>
+
+      <!-- Fast Food category card -->
+      <div class="category-card" onclick="openCategory('FastFood')">
+        <div class="category-card-name">Fast Food</div>
+        <div class="category-card-image" id="fastFoodImage"></div>
+      </div>
+
+      <!-- North Indian category card -->
+      <div class="category-card" onclick="openCategory('NorthIndian')">
+        <div class="category-card-name">North Indian</div>
+        <div class="category-card-image" id="northIndianImage"></div>
+      </div>
+
+      <!-- Chinese category card -->
+      <div class="category-card" onclick="openCategory('Chinese')">
+        <div class="category-card-name">Chinese</div>
+        <div class="category-card-image" id="chineseImage"></div>
       </div>
     </div>
-
-    <div class="container" id="recipePage" style="display: none">
-      <!-- Recipe list -->
-      <ul class="recipe-list">
-        <!-- Sample Recipe 1: South Indian -->
-        <li class="recipe-container" id="dosa" data-category="south-indian">
-          <div class="overlay"></div>
-          <div class="content">
-            <h2>South Indian Dosa</h2>
-            <div class="ingredients">
-              <h3>Ingredients:</h3>
-              <p>Rice, Black gram, Salt, Water, Oil</p>
-            </div>
-            <div class="instructions">
-              <h3>Instructions:</h3>
-              <p>
-                1. Soak rice and black gram separately for 6 hours. 2. Grind
-                them into a smooth batter. 3. Ferment the batter overnight. 4.
-                Heat a non-stick pan, pour a ladleful of batter, and spread it
-                into a thin circle. 5. Drizzle oil around the edges. 6. Cook
-                until golden brown. 7. Serve hot with chutney and sambar.
-              </p>
-            </div>
-            <button class="btn" onclick="editRecipe('dosa')">Edit</button>
-            <button class="btn" onclick="deleteRecipe('dosa')">Delete</button>
-          </div>
-        </li>
-        <!-- Sample Recipe 2: North Indian -->
-        <li
-          class="recipe-container"
-          id="butter-chicken"
-          data-category="north-indian"
-        >
-          <div class="overlay"></div>
-          <div class="content">
-            <h2>North Indian Butter Chicken</h2>
-            <div class="ingredients">
-              <h3>Ingredients:</h3>
-              <p>
-                Chicken, Butter, Yogurt, Cream, Tomato puree, Ginger, Garlic,
-                Spices
-              </p>
-            </div>
-            <div class="instructions">
-              <h3>Instructions:</h3>
-              <p>
-                1. Marinate chicken with yogurt, ginger, garlic, and spices for
-                2 hours. 2. Grill or roast the chicken until cooked. 3. In a
-                pan, melt butter, add tomato puree, cream, and cooked chicken.
-                4. Simmer until the sauce thickens. 5. Serve hot with naan or
-                rice.
-              </p>
-            </div>
-            <button class="btn" onclick="editRecipe('butter-chicken')">
-              Edit
-            </button>
-            <button class="btn" onclick="deleteRecipe('butter-chicken')">
-              Delete
-            </button>
-          </div>
-        </li>
-        <!-- Sample Recipe 3: Chinese -->
-        <li class="recipe-container" id="fried-rice" data-category="chinese">
-          <div class="overlay"></div>
-          <div class="content">
-            <h2>Chinese Fried Rice</h2>
-            <div class="ingredients">
-              <h3>Ingredients:</h3>
-              <p>
-                Rice, Vegetables (carrot, peas, bell peppers), Eggs, Soy Sauce,
-                Garlic, Ginger, Oil
-              </p>
-            </div>
-            <div class="instructions">
-              <h3>Instructions:</h3>
-              <p>
-                1. Cook rice and let it cool. 2. Heat oil in a pan, add minced
-                garlic and ginger. 3. Add chopped vegetables and stir-fry until
-                tender. 4. Push vegetables to one side, scramble eggs on the
-                other side. 5. Mix eggs with vegetables. 6. Add cooked rice and
-                soy sauce, mix well. 7. Cook for a few minutes, stirring
-                continuously. 8. Serve hot.
-              </p>
-            </div>
-            <button class="btn" onclick="editRecipe('fried-rice')">Edit</button>
-            <button class="btn" onclick="deleteRecipe('fried-rice')">
-              Delete
-            </button>
-          </div>
-        </li>
-        <!-- Sample Recipe 4: Chinese -->
-        <li class="recipe-container" id="chow-mein" data-category="chinese">
-          <div class="overlay"></div>
-          <div class="content">
-            <h2>Chinese Chow Mein</h2>
-            <div class="ingredients">
-              <h3>Ingredients:</h3>
-              <p>
-                Noodles, Chicken/Beef/Shrimp, Vegetables (cabbage, carrots, bell
-                peppers), Soy Sauce, Oyster Sauce, Garlic, Ginger, Oil
-              </p>
-            </div>
-            <div class="instructions">
-              <h3>Instructions:</h3>
-              <p>
-                1. Cook noodles according to package instructions. 2. Heat oil
-                in a pan, add minced garlic and ginger. 3. Add protein and
-                stir-fry until cooked. 4. Add chopped vegetables and stir-fry
-                until tender. 5. Add cooked noodles, soy sauce, and oyster
-                sauce. 6. Toss everything together until well combined. 7. Serve
-                hot.
-              </p>
-            </div>
-            <button class="btn" onclick="editRecipe('chow-mein')">Edit</button>
-            <button class="btn" onclick="deleteRecipe('chow-mein')">
-              Delete
-            </button>
-          </div>
-        </li>
-        <!-- Sample Recipe 5: South Indian -->
-        <li class="recipe-container" id="idli" data-category="south-indian">
-          <div class="overlay"></div>
-          <div class="content">
-            <h2>South Indian Idli</h2>
-            <div class="ingredients">
-              <h3>Ingredients:</h3>
-              <p>Rice, Black gram (urad dal), Salt, Water</p>
-            </div>
-            <div class="instructions">
-              <h3>Instructions:</h3>
-              <p>
-                1. Soak rice and black gram separately for 4-6 hours. 2. Grind
-                them into a smooth batter. 3. Ferment the batter overnight. 4.
-                Grease idli molds and pour the batter into them. 5. Steam for
-                about 10-12 minutes. 6. Serve hot with chutney and sambar.
-              </p>
-            </div>
-            <button class="btn" onclick="editRecipe('idli')">Edit</button>
-            <button class="btn" onclick="deleteRecipe('idli')">Delete</button>
-          </div>
-        </li>
-
-        <!-- Sample Recipe 6: North Indian -->
-        <li
-          class="recipe-container"
-          id="paneer-tikka"
-          data-category="north-indian"
-        >
-          <div class="overlay"></div>
-          <div class="content">
-            <h2>North Indian Paneer Tikka</h2>
-            <div class="ingredients">
-              <h3>Ingredients:</h3>
-              <p>
-                Paneer (cottage cheese), Bell peppers, Onions, Yogurt, Spices
-                (garam masala, turmeric, chili powder), Lemon juice
-              </p>
-            </div>
-            <div class="instructions">
-              <h3>Instructions:</h3>
-              <p>
-                1. Cut paneer, bell peppers, and onions into cubes. 2. Mix
-                yogurt with spices and lemon juice to make a marinade. 3.
-                Marinate paneer and vegetables for 1-2 hours. 4. Skewer them
-                alternately. 5. Grill or bake until golden brown. 6. Serve hot
-                with mint chutney.
-              </p>
-            </div>
-            <button class="btn" onclick="editRecipe('paneer-tikka')">
-              Edit
-            </button>
-            <button class="btn" onclick="deleteRecipe('paneer-tikka')">
-              Delete
-            </button>
-          </div>
-        </li>
-
-        <!-- Sample Recipe 7: Chinese -->
-        <li
-          class="recipe-container"
-          id="hot-and-sour-soup"
-          data-category="chinese"
-        >
-          <div class="overlay"></div>
-          <div class="content">
-            <h2>Chinese Hot and Sour Soup</h2>
-            <div class="ingredients">
-              <h3>Ingredients:</h3>
-              <p>
-                Chicken/vegetable broth, Tofu, Mushrooms, Bamboo shoots, Eggs,
-                Vinegar, Soy sauce, Cornstarch, Pepper, Chili sauce
-              </p>
-            </div>
-            <div class="instructions">
-              <h3>Instructions:</h3>
-              <p>
-                1. Bring broth to a boil, add tofu, mushrooms, and bamboo
-                shoots. 2. In a separate bowl, whisk eggs. 3. Slowly pour
-                whisked eggs into the boiling soup, stirring constantly. 4. Mix
-                vinegar, soy sauce, cornstarch, pepper, and chili sauce in a
-                bowl. 5. Slowly add this mixture to the soup, stirring
-                continuously. 6. Simmer until the soup thickens. 7. Serve hot.
-              </p>
-            </div>
-            <button class="btn" onclick="editRecipe('hot-and-sour-soup')">
-              Edit
-            </button>
-            <button class="btn" onclick="deleteRecipe('hot-and-sour-soup')">
-              Delete
-            </button>
-          </div>
-        </li>
-
-        <!-- Sample Recipe 8: Fast Food -->
-        <li class="recipe-container" id="hamburger" data-category="fast-food">
-          <div class="overlay"></div>
-          <div class="content">
-            <h2>Hamburger</h2>
-            <div class="ingredients">
-              <h3>Ingredients:</h3>
-              <p>
-                Ground beef, Hamburger buns, Lettuce, Tomato, Onion, Pickles,
-                Cheese, Ketchup, Mustard
-              </p>
-            </div>
-            <div class="instructions">
-              <h3>Instructions:</h3>
-              <p>
-                1. Divide ground beef into patties, season with salt and pepper.
-                2. Grill or fry the patties until cooked to your preference. 3.
-                Toast the hamburger buns. 4. Assemble the burger with lettuce,
-                tomato, onion, pickles, cheese, ketchup, and mustard. 5. Serve
-                hot.
-              </p>
-            </div>
-            <button class="btn" onclick="editRecipe('hamburger')">Edit</button>
-            <button class="btn" onclick="deleteRecipe('hamburger')">
-              Delete
-            </button>
-          </div>
-        </li>
-
-        <!-- Add more recipes here -->
-      </ul>
-
-     
- <!-- Add recipe form -->
-<div class="container" id="addRecipeForm" style="display: none">
-    <h2>Add New Recipe</h2>
-    <label for="newRecipeName">Recipe Name:</label>
-    <input type="text" id="newRecipeName" class="editable-input" data-category="recipe-name" />
-    <label for="newIngredients">Ingredients:</label>
-    <textarea id="newIngredients" class="editable-input" rows="5" data-category="ingredients"></textarea>
-    <label for="newInstructions">Cooking Instructions:</label>
-    <textarea id="newInstructions" class="editable-input" rows="5" data-category="instructions"></textarea>
-    <!-- Add category dropdown menu -->
-    <label for="newCategory">Category:</label>
-    <select id="newCategory" class="editable-input" data-category="category">
-      <option value="south-indian">South Indian</option>
-      <option value="north-indian">North Indian</option>
-      <option value="chinese">Chinese</option>
-      <option value="fast-food">Fast Food</option>
-      <!-- Add more category options as needed -->
-    </select>
-    <button class="btn" onclick="addRecipe()">Add Recipe</button>
   </div>
-  
-  
-      <!-- Button to show add recipe form -->
-      <div class="container">
-        <button class="btn" onclick="showAddRecipeForm()">
-          Add New Recipe
+
+  <!-- South Indian recipe list container -->
+  <div id="southindianRecipesContainer" class="recipe-list-container">
+    <h2>South Indian Recipes</h2>
+    <ul class="recipe-list" id="southIndianRecipeList">
+      <!-- Sample South Indian recipes -->
+      <li class="recipe-item">
+        <div class="edit-delete-buttons">
+          <button class="edit-button" onclick="editRecipe(this)">Edit</button>
+          <button class="delete-button" onclick="deleteRecipe(this)">
+            Delete
+          </button>
+        </div>
+        <h3>Sample South Indian Recipe 1</h3>
+        <p>
+          <strong>Ingredients:</strong><br />Sample ingredient list for South
+          Indian Recipe 1
+        </p>
+        <p>
+          <strong>Instructions:</strong><br />Sample instructions for South
+          Indian Recipe 1
+        </p>
+      </li>
+      <li class="recipe-item">
+        <div class="edit-delete-buttons">
+          <button class="edit-button" onclick="editRecipe(this)">Edit</button>
+          <button class="delete-button" onclick="deleteRecipe(this)">
+            Delete
+          </button>
+        </div>
+        <h3>Sample South Indian Recipe 2</h3>
+        <p>
+          <strong>Ingredients:</strong><br />Sample ingredient list for South
+          Indian Recipe 2
+        </p>
+        <p>
+          <strong>Instructions:</strong><br />Sample instructions for South
+          Indian Recipe 2
+        </p>
+      </li>
+    </ul>
+    <button class="add-recipe-button" onclick="toggleAddRecipeForm('SouthIndian')">Add Recipe</button>
+    <!-- Modified button -->
+    <!-- Add recipe form -->
+    <div id="addRecipeFormSouthIndian" class="add-recipe-form" style="display: none">
+      <h3>Add New Recipe</h3>
+      <form onsubmit="addRecipeFromForm(event, 'SouthIndian')">
+        <input type="text" id="recipeTitleSouthIndian" placeholder="Title" required /><br />
+        <textarea id="recipeIngredientsSouthIndian" placeholder="Ingredients" required></textarea><br />
+        <textarea id="recipeInstructionsSouthIndian" placeholder="Instructions" required></textarea><br />
+        <button type="submit">Add Recipe</button>
+        <button type="button" onclick="toggleAddRecipeForm('SouthIndian')">
+          Cancel
         </button>
-      </div>
+      </form>
     </div>
 
-    <script>
-      // Dummy user data
-      var users = [
-        { username: "user1", password: "password1" },
-        { username: "user2", password: "password2" },
-        { username: "user3", password: "password3" },
-      ];
+  </div>
+  </div>
 
-      // Function to filter recipes by category
-      function filterRecipes(category) {
-        var recipes = document.querySelectorAll(".recipe-container");
-        recipes.forEach((recipe) => {
-          var recipeCategory = recipe.dataset.category;
-          if (category === "all" || recipeCategory === category) {
-            recipe.style.display = "block";
-          } else {
-            recipe.style.display = "none";
-          }
-        });
-      }
+  <!-- Fast Food recipe list container -->
+  <div id="fastfoodRecipesContainer" class="recipe-list-container">
+    <h2>Fast Food Recipes</h2>
+    <ul class="recipe-list">
+      <!-- Sample Fast Food recipes -->
+      <li class="recipe-item">
+        <div class="edit-delete-buttons">
+          <button class="edit-button" onclick="editRecipe(this)">Edit</button>
+          <button class="delete-button" onclick="deleteRecipe(this)">
+            Delete
+          </button>
+        </div>
+        <h3>Sample Fast Food Recipe 1</h3>
+        <p>
+          <strong>Ingredients:</strong><br />Sample ingredient list for Fast
+          Food Recipe 1
+        </p>
+        <p>
+          <strong>Instructions:</strong><br />Sample instructions for Fast
+          Food Recipe 1
+        </p>
+      </li>
+      <li class="recipe-item">
+        <div class="edit-delete-buttons">
+          <button class="edit-button" onclick="editRecipe(this)">Edit</button>
+          <button class="delete-button" onclick="deleteRecipe(this)">
+            Delete
+          </button>
+        </div>
+        <h3>Sample Fast Food Recipe 2</h3>
+        <p>
+          <strong>Ingredients:</strong><br />Sample ingredient list for Fast
+          Food Recipe 2
+        </p>
+        <p>
+          <strong>Instructions:</strong><br />Sample instructions for Fast
+          Food Recipe 2
+        </p>
+      </li>
+    </ul>
+    <button class="add-recipe-button" onclick="toggleAddRecipeForm('FastFood')">Add Recipe</button>
+    <!-- Modified button -->
+    <!-- Add recipe form -->
+    <div id="addRecipeFormFastFood" class="add-recipe-form" style="display: none">
+      <h3>Add New Recipe</h3>
+      <form onsubmit="addRecipeFromForm(event, 'FastFood')">
+        <input type="text" id="recipeTitleFastFood" placeholder="Title" required /><br />
+        <textarea id="recipeIngredientsFastFood" placeholder="Ingredients" required></textarea><br />
+        <textarea id="recipeInstructionsFastFood" placeholder="Instructions" required></textarea><br />
+        <button type="submit">Add Recipe</button>
+        <button type="button" onclick="toggleAddRecipeForm('FastFood')">
+          Cancel
+        </button>
+      </form>
+    </div>
+  </div>
 
-      function setBackgroundImage(recipeId, title) {
-        var recipeContainer = document.getElementById(recipeId);
-        var unsplashURL = "https://source.unsplash.com/1600x900/?" + title;
-        recipeContainer.style.backgroundImage = 'url("' + unsplashURL + '")';
-      }
+  <!-- North Indian recipe list container -->
+  <div id="northindianRecipesContainer" class="recipe-list-container">
+    <h2>North Indian Recipes</h2>
+    <ul class="recipe-list">
+      <!-- Sample North Indian recipes -->
+      <li class="recipe-item">
+        <div class="edit-delete-buttons">
+          <button class="edit-button" onclick="editRecipe(this)">Edit</button>
+          <button class="delete-button" onclick="deleteRecipe(this)">
+            Delete
+          </button>
+        </div>
+        <h3>Sample North Indian Recipe 1</h3>
+        <p>
+          <strong>Ingredients:</strong><br />Sample ingredient list for North
+          Indian Recipe 1
+        </p>
+        <p>
+          <strong>Instructions:</strong><br />Sample instructions for North
+          Indian Recipe 1
+        </p>
+      </li>
+      <li class="recipe-item">
+        <div class="edit-delete-buttons">
+          <button class="edit-button" onclick="editRecipe(this)">Edit</button>
+          <button class="delete-button" onclick="deleteRecipe(this)">
+            Delete
+          </button>
+        </div>
+        <h3>Sample North Indian Recipe 2</h3>
+        <p>
+          <strong>Ingredients:</strong><br />Sample ingredient list for North
+          Indian Recipe 2
+        </p>
+        <p>
+          <strong>Instructions:</strong><br />Sample instructions for North
+          Indian Recipe 2
+        </p>
+      </li>
+    </ul>
+    <button class="add-recipe-button" onclick="toggleAddRecipeForm('NorthIndian')">Add Recipe</button>
+    <!-- Modified button -->
+    <!-- Add recipe form -->
+    <div id="addRecipeFormNorthIndian" class="add-recipe-form" style="display: none">
+      <h3>Add New Recipe</h3>
+      <form onsubmit="addRecipeFromForm(event, 'NorthIndian')">
+        <input type="text" id="recipeTitleNorthIndian" placeholder="Title" required /><br />
+        <textarea id="recipeIngredientsNorthIndian" placeholder="Ingredients" required></textarea><br />
+        <textarea id="recipeInstructionsNorthIndian" placeholder="Instructions" required></textarea><br />
+        <button type="submit">Add Recipe</button>
+        <button type="button" onclick="toggleAddRecipeForm('NorthIndian')">
+          Cancel
+        </button>
+      </form>
+    </div>
+  </div>
 
-      function login() {
-        var username = document.getElementById("username").value;
-        var password = document.getElementById("password").value;
+  <!-- Chinese recipe list container -->
+  <div id="chineseRecipesContainer" class="recipe-list-container">
+    <h2>Chinese Recipes</h2>
+    <ul class="recipe-list">
+      <!-- Sample Chinese recipes -->
+      <li class="recipe-item">
+        <div class="edit-delete-buttons">
+          <button class="edit-button" onclick="editRecipe(this)">Edit</button>
+          <button class="delete-button" onclick="deleteRecipe(this)">
+            Delete
+          </button>
+        </div>
+        <h3>Sample Chinese Recipe 1</h3>
+        <p>
+          <strong>Ingredients:</strong><br />Sample ingredient list for
+          Chinese Recipe 1
+        </p>
+        <p>
+          <strong>Instructions:</strong><br />Sample instructions for Chinese
+          Recipe 1
+        </p>
+      </li>
+      <li class="recipe-item">
+        <div class="edit-delete-buttons">
+          <button class="edit-button" onclick="editRecipe(this)">Edit</button>
+          <button class="delete-button" onclick="deleteRecipe(this)">
+            Delete
+          </button>
+        </div>
+        <h3>Sample Chinese Recipe 2</h3>
+        <p>
+          <strong>Ingredients:</strong><br />Sample ingredient list for
+          Chinese Recipe 2
+        </p>
+        <p>
+          <strong>Instructions:</strong><br />Sample instructions for Chinese
+          Recipe 2
+        </p>
+      </li>
+    </ul>
+    <button class="add-recipe-button" onclick="toggleAddRecipeForm('Chinese')">Add Recipe</button>
+    <!-- Modified button -->
+    <!-- Add recipe form -->
+    <div id="addRecipeFormChinese" class="add-recipe-form" style="display: none">
+      <h3>Add New Recipe</h3>
+      <form onsubmit="addRecipeFromForm(event, 'Chinese')">
+        <input type="text" id="recipeTitleChinese" placeholder="Title" required /><br />
+        <textarea id="recipeIngredientsChinese" placeholder="Ingredients" required></textarea><br />
+        <textarea id="recipeInstructionsChinese" placeholder="Instructions" required></textarea><br />
+        <button type="submit">Add Recipe</button>
+        <button type="button" onclick="toggleAddRecipeForm('Chinese')">
+          Cancel
+        </button>
+      </form>
+    </div>
+  </div>
+  <script>
+    document
+      .getElementById("loginForm")
+      .addEventListener("submit", function (event) {
+        event.preventDefault();
 
-        // Check if user credentials match
-        var user = users.find(
-          (u) => u.username === username && u.password === password
+        // Dummy user data
+        const dummyUserData = [
+          { username: "user1", password: "pass1" },
+          { username: "user", password: "pass" },
+          { username: "admin", password: "admin" },
+        ];
+
+        const enteredUsername = document.getElementById("username").value;
+        const enteredPassword = document.getElementById("password").value;
+
+        // Check if entered credentials match any of the dummy user data
+        const user = dummyUserData.find(
+          (user) =>
+            user.username === enteredUsername &&
+            user.password === enteredPassword
         );
 
         if (user) {
-          // Redirect to homepage or show recipe details
+          // Hide login container after successful login
           document.getElementById("loginForm").style.display = "none";
-          document.getElementById("recipePage").style.display = "block";
+
+          // Show recipe container
+          document.getElementById("recipeContainer").classList.add("show");
+
+          // Set background images for category cards
+   
+          setRandomBackgroundImage("northIndianImage", "North-Indian-Food");
+          setRandomBackgroundImage("southIndianImage", "South-Indian-Food");
+          setRandomBackgroundImage("chineseImage", "Chinese-Food");
+          setRandomBackgroundImage("fastFoodImage", "Fast-Food");
+          setRandomBackgroundImage('southindianRecipesContainer', 'South Indian Food');
+          setRandomBackgroundImage('northindianRecipesContainer', 'North Indian Food');
+          setRandomBackgroundImage('fastfoodRecipesContainer', 'Fast-Food');
+          setRandomBackgroundImage('chineseRecipesContainer', 'Chinese-Food');
+
         } else {
-          alert("Invalid username or password.");
+          // Display error message for invalid credentials
+          document.getElementById("error").textContent =
+            "Invalid username or password";
+        }
+      });
+
+    function toggleAddRecipeForm(category) {
+      const form = document.getElementById(
+        `addRecipeForm${category.replace(/\s+/g, "")}`
+      );
+      if (form) {
+        form.style.display = form.style.display === "none" ? "block" : "none";
+      }
+    }
+
+    function addRecipeFromForm(event, category) {
+      event.preventDefault();
+
+      const recipeTitle = document.getElementById(
+        `recipeTitle${category.replace(/\s+/g, "")}`
+      ).value;
+      const recipeIngredients = document.getElementById(
+        `recipeIngredients${category.replace(/\s+/g, "")}`
+      ).value;
+      const recipeInstructions = document.getElementById(
+        `recipeInstructions${category.replace(/\s+/g, "")}`
+      ).value;
+
+      // Check if the recipe list container exists in the DOM
+      const recipeList = document
+        .getElementById(`${category.toLowerCase()}RecipesContainer`)
+        .querySelector(".recipe-list");
+      if (recipeList) {
+        // Ensure recipeList is not null
+        // Add the new recipe item to the recipe list container
+        const newRecipeItem = document.createElement("li");
+        newRecipeItem.classList.add("recipe-item");
+        newRecipeItem.innerHTML = `
+      <div class="edit-delete-buttons">
+          <button class="edit-button" onclick="editRecipe(this)">Edit</button>
+          <button class="delete-button" onclick="deleteRecipe(this)">Delete</button>
+      </div>
+      <h3>${recipeTitle}</h3>
+      <p><strong>Ingredients:</strong><br>${recipeIngredients}</p>
+      <p><strong>Instructions:</strong><br>${recipeInstructions}</p>
+  `;
+        recipeList.appendChild(newRecipeItem);
+      } else {
+        console.error(`Recipe list for category '${category}' not found.`);
+      }
+    }
+
+    async function setRandomBackgroundImage(elementId, keyword) {
+            const element = document.getElementById(elementId);
+            const accessKey = 'uWfrJ5iTDNxMYZ53esF7oQ4yYz7oRwfraxESLsNE7CE'; // Replace with your Unsplash API access key
+            const unsplashURL = `https://api.unsplash.com/search/photos?page=1&query=${encodeURIComponent(keyword)}&client_id=${accessKey}`;
+
+            try {
+                const response = await fetch(unsplashURL);
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.results.length > 0) {
+                        // Select a random image from the results
+                        const randomIndex = Math.floor(Math.random() * data.results.length);
+                        const imageUrl = data.results[randomIndex].urls.regular;
+                        
+                        // Set the selected image as the background
+                        element.style.backgroundImage = `url(${imageUrl})`;
+                        element.style.backgroundSize = 'cover'; // Ensures the image covers the entire element
+                        element.style.backgroundPosition = 'center'; // Centers the background image
+                    } else {
+                        console.error('No images found for the given keyword.');
+                    }
+                } else {
+                    console.error('Failed to fetch images from Unsplash:', response.status, response.statusText);
+                }
+            } catch (error) {
+                console.error('Error fetching image from Unsplash:', error);
+            }
+        }   
+            setRandomBackgroundImage("body", "recipe");
+
+
+    function addRecipe(category) {
+      const recipeName = prompt(`Enter the name of the ${category} recipe:`);
+      if (recipeName) {
+        const recipeList = document.getElementById(`${category.toLowerCase()}RecipeList`);
+        if (recipeList) {
+          // Create a new list item for the recipe
+          const newRecipeItem = document.createElement("li");
+          newRecipeItem.classList.add("recipe-item");
+
+          // Create the edit and delete buttons
+          const editDeleteButtons = document.createElement("div");
+          editDeleteButtons.classList.add("edit-delete-buttons");
+
+          // Create the edit button
+          const editButton = document.createElement("button");
+          editButton.classList.add("edit-button");
+          editButton.textContent = "Edit";
+          editButton.onclick = function () { editRecipe(this); };
+
+          // Create the delete button
+          const deleteButton = document.createElement("button");
+          deleteButton.classList.add("delete-button");
+          deleteButton.textContent = "Delete";
+          deleteButton.onclick = function () { deleteRecipe(this); };
+
+          // Append buttons to the editDeleteButtons container
+          editDeleteButtons.appendChild(editButton);
+          editDeleteButtons.appendChild(deleteButton);
+
+          // Create the recipe title element
+          const recipeTitle = document.createElement("h3");
+          recipeTitle.textContent = recipeName;
+
+          // Create the ingredients paragraph
+          const ingredientsParagraph = document.createElement("p");
+          ingredientsParagraph.innerHTML = `<strong>Ingredients:</strong><br />Sample ingredient list for ${recipeName}`;
+
+          // Create the instructions paragraph
+          const instructionsParagraph = document.createElement("p");
+          instructionsParagraph.innerHTML = `<strong>Instructions:</strong><br />Sample instructions for ${recipeName}`;
+
+          // Append all elements to the newRecipeItem
+          newRecipeItem.appendChild(editDeleteButtons);
+          newRecipeItem.appendChild(recipeTitle);
+          newRecipeItem.appendChild(ingredientsParagraph);
+          newRecipeItem.appendChild(instructionsParagraph);
+
+          // Append the new recipe item to the recipe list
+          recipeList.appendChild(newRecipeItem);
+        } else {
+          console.error(`Recipe list for category '${category}' not found.`);
         }
       }
+    }
 
-      function showAddRecipeForm() {
-        document.getElementById("addRecipeForm").style.display = "block";
+    function deleteRecipe(button) {
+      const recipeItem = button.closest(".recipe-item");
+      recipeItem.remove();
+    }
+
+    function openCategory(category) {
+      // Hide all recipe list containers
+      var recipeContainers = document.querySelectorAll(
+        ".recipe-list-container"
+      );
+      recipeContainers.forEach((container) => {
+        container.style.display = "none";
+      });
+
+      // Show the recipe list container for the clicked category
+      var categoryContainer = document.getElementById(
+        `${category.toLowerCase()}RecipesContainer`
+      );
+      if (categoryContainer) {
+        categoryContainer.style.display = "block";
+      } else {
+        console.error(
+          `Recipe container for category '${category}' not found.`
+        );
       }
+    }
 
-      function addRecipe() {
-        var newRecipeName = document.getElementById("newRecipeName").value;
-        var newIngredients = document.getElementById("newIngredients").value;
-        var newInstructions = document.getElementById("newInstructions").value;
-        var newCategory = document.getElementById("newCategory").value; // Get the selected category
+    function editRecipe(button) {
+      const recipeItem = button.closest(".recipe-item");
+      const recipeTitle = recipeItem.querySelector("h3").textContent;
+      const recipeIngredients = recipeItem
+        .querySelector("p:nth-of-type(1)")
+        .textContent.split("\n")[1]; // Extracting ingredients
+      const recipeInstructions = recipeItem
+        .querySelector("p:nth-of-type(2)")
+        .textContent.split("\n")[1]; // Extracting instructions
 
-        if (newRecipeName && newIngredients && newInstructions && newCategory) {
-          var newRecipe = document.createElement("li");
-          newRecipe.className = "recipe-container";
-          newRecipe.id = newRecipeName.toLowerCase().replace(/\s+/g, "-");
-          newRecipe.setAttribute("data-category", newCategory); // Add the data-category attribute
-          newRecipe.innerHTML = `
-            <div class="overlay"></div>
-            <div class="content">
-                <h2>${newRecipeName}</h2>
-                <div class="ingredients">
-                    <h3>Ingredients:</h3>
-                    <p>${newIngredients}</p>
-                </div>
-                <div class="instructions">
-                    <h3>Cooking Instructions:</h3>
-                    <p>${newInstructions}</p>
-                </div>
-                <button class="btn" onclick="editRecipe('${newRecipeName
-                  .toLowerCase()
-                  .replace(/\s+/g, "-")}')">Edit</button>
-                <button class="btn" onclick="deleteRecipe('${newRecipeName
-                  .toLowerCase()
-                  .replace(/\s+/g, "-")}')">Delete</button>
+      // Replace recipe content with input fields for editing
+      recipeItem.innerHTML = `
+            <div class="edit-delete-buttons">
+                <button class="save-button" onclick="saveRecipe(this)">Save</button>
+                <button class="cancel-button" onclick="cancelEdit(this)">Cancel</button>
             </div>
+            <input type="text" class="recipe-title" value="${recipeTitle}">
+            <textarea class="recipe-ingredients">${recipeIngredients}</textarea>
+            <textarea class="recipe-instructions">${recipeInstructions}</textarea>
         `;
+    }
 
-          document.querySelector(".recipe-list").appendChild(newRecipe);
-          document.getElementById("addRecipeForm").style.display = "none";
+    function saveRecipe(button) {
+      const recipeItem = button.closest(".recipe-item");
+      const recipeTitle = recipeItem.querySelector(".recipe-title").value;
+      const recipeIngredients = recipeItem.querySelector(
+        ".recipe-ingredients"
+      ).value;
+      const recipeInstructions = recipeItem.querySelector(
+        ".recipe-instructions"
+      ).value;
 
-          // Set background image for the new recipe
-          setBackgroundImage(newRecipe.id, newRecipeName.toLowerCase());
-        } else {
-          alert("Please fill in all fields.");
-        }
-      }
+      // Update recipe content with edited values
+      recipeItem.innerHTML = `
+            <div class="edit-delete-buttons">
+                <button class="edit-button" onclick="editRecipe(this)">Edit</button>
+                <button class="delete-button" onclick="deleteRecipe(this)">Delete</button>
+            </div>
+            <h3>${recipeTitle}</h3>
+            <p><strong>Ingredients:</strong><br>${recipeIngredients}</p>
+            <p><strong>Instructions:</strong><br>${recipeInstructions}</p>
+        `;
+    }
 
-      function editRecipe(recipeId) {
-        var recipeContainer = document.getElementById(recipeId);
-        var recipeName = recipeContainer.querySelector("h2").textContent;
-        var ingredients =
-          recipeContainer.querySelector(".ingredients p").textContent;
-        var instructions =
-          recipeContainer.querySelector(".instructions p").textContent;
+    
 
-        var newName = prompt("Enter new recipe name", recipeName);
-        if (newName !== null) {
-          var newIngredients = prompt("Enter new ingredients", ingredients);
-          var newInstructions = prompt("Enter new instructions", instructions);
+    function cancelEdit(button) {
+      // const recipeItem = button.closest(".recipe-item");
+      // // Restore original recipe content
+      // // Assuming the original content is stored in data attributes or retrieved from the server
+      // const originalContent = recipeItem.dataset.originalContent;
+      // recipeItem.innerHTML = originalContent;
 
-          recipeContainer.querySelector("h2").textContent = newName;
-          recipeContainer.querySelector(".ingredients p").textContent =
-            newIngredients;
-          recipeContainer.querySelector(".instructions p").textContent =
-            newInstructions;
-          setBackgroundImage(recipeId, newName.toLowerCase());
-        }
-      }
+      const recipeTitleInput = document.querySelector(".edit-form .recipe-title");
+  const recipeIngredientsInput = document.querySelector(".edit-form .recipe-ingredients");
+  const recipeInstructionsInput = document.querySelector(".edit-form .recipe-instructions");
 
-      function deleteRecipe(recipeId) {
-        document.getElementById(recipeId).remove();
-      }
-      setRandomBackgroundImage("dosa", "dosa");
-      setRandomBackgroundImage("butter-chicken", "butter-chicken");
-      setRandomBackgroundImage("fried-rice", "fried-rice");
-      setRandomBackgroundImage("chow-mein", "chow-mein");
-      setRandomBackgroundImage("idli", "idli");
-      setRandomBackgroundImage("paneer-tikka", "paneer");
-      setRandomBackgroundImage("hot-and-sour-soup", "sour-soup");
-      setRandomBackgroundImage("hamburger", "hamburger");
-    </script>
-  </body>
+  recipeTitleInput.value = "";
+  recipeIngredientsInput.value = "";
+  recipeInstructionsInput.value = "";
+    }
+
+
+    
+  </script>
+</body>
 </html>
